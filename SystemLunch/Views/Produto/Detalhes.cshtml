@@ -1,0 +1,78 @@
+﻿@model SystemBeauty.ViewModels.ProdutoVM
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<div>
+    <div class="row justify-content-center align-items-center">
+        <div class="col-4">
+            <img src="@Model.ImageURL" class="img-thumbnail" alt="Imagem" />
+        </div>
+        <div class="col-md-4">
+            <div class="col">
+                <div class="h4">
+                    <strong>@Model.Nome</strong>
+                </div>
+            </div>
+            <hr />
+            <div class="col">
+                <div class="h5">
+                    Por: @Html.DisplayFor(model => model.Preco.ToString("c"))
+                </div>
+            </div>
+            <hr />
+            <div class="col">
+                <h6 class="text-justify">@Html.DisplayFor(model => model.DescricaoCurta)</h6>
+            </div>
+            <hr />
+            <div class="col">
+                <a asp-action="Adicionar" asp-route-id="@Model.ID" class="btn btn-primary">Adiocionar ao Carrinho</a>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col">
+            <strong>Produto: </strong>
+            @Html.DisplayFor(model => model.DescricaoProduto)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <strong>Adicional: </strong>
+            @Html.DisplayFor(model => model.DescricaoAdicional)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <strong>Modo de Uso: </strong>
+            @Html.DisplayFor(model => model.ModoUso)
+        </div>
+        <br />
+        <div class="col">
+            <strong>Ação e Benefício: </strong>
+            @Html.DisplayFor(model => model.AcaoBeneficio)
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <strong>Composição: </strong>
+            @Html.DisplayFor(model => model.Composicao)
+        </div>
+        <br />
+        <div class="col">
+            <strong>Indicação: </strong>
+            @Html.DisplayFor(model => model.Indicacao)
+        </div>
+    </div>
+</div>
+<hr />
+<div>
+    <a asp-action="Editar" asp-route-id="@Model.ID" class="btn btn-secondary">Editar</a> |
+    <a asp-action="Excluir" asp-route-id="@Model.ID" class="btn btn-danger">Excluir</a> |
+    <a asp-action="Lista" class="btn btn-dark">Voltar</a>
+</div>

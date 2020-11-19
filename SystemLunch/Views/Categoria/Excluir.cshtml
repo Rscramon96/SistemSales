@@ -1,0 +1,32 @@
+﻿@model SystemBeauty.ViewModels.CategoriaVM
+
+@{
+    ViewData["Title"] = "Excluir";
+}
+
+
+<h3>Você deseja apagar está categoria?</h3>
+<hr />
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+    </dl>
+    
+    <form asp-action="Excluir">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Excluir" class="btn btn-danger" /> |
+        <a asp-action="Lista" class="btn btn-secondary">Voltar</a>
+    </form>
+</div>
