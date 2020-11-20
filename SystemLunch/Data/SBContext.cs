@@ -10,7 +10,7 @@ namespace SystemBeauty.Data
 
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<SystemBeauty.ViewModels.ProdutoVM> ProdutoVM { get; set; }
+        public DbSet<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
 
     }
 }
