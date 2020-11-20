@@ -8,11 +8,11 @@ using SystemBeauty.Models;
 
 namespace SystemBeauty.Repositories
 {
-    public class ProdutoRepository : IProdutoRepository
+    public class ProdutoRepositoryRP : IProdutoRepository
     {
 
         private readonly SBContext _context;
-        public ProdutoRepository(SBContext contexto)
+        public ProdutoRepositoryRP(SBContext contexto)
         {
             _context = contexto;
         }

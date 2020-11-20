@@ -7,10 +7,10 @@ using SystemBeauty.Models;
 
 namespace SystemBeauty.Repositories
 {
-    public class CategoriaRepository : ICategoriaRepository
+    public class CategoriaRepositoryRP : ICategoriaRepository
     {
         private readonly SBContext _context;
-        public CategoriaRepository(SBContext contexto)
+        public CategoriaRepositoryRP(SBContext contexto)
         {
             _context = contexto;
         }

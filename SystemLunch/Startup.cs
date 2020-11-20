@@ -11,6 +11,9 @@ using SystemBeauty.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using SystemBeauty.Repositories;
+using SystemBeauty.Models;
+using Microsoft.AspNetCore.Http;
+using SystemBeauty.Interfaces;
 
 namespace SystemBeauty
 {
@@ -28,8 +31,15 @@ namespace SystemBeauty
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<SBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<ICategoriaRepository, CategoriaRepository>();
-            services.AddTransient<IProdutoRepository, ProdutoRepository>();
+            services.AddTransient<ICategoriaRepository, CategoriaRepositoryRP>();
+            services.AddTransient<IProdutoRepository, ProdutoRepositoryRP>();
+            services.AddTransient<ICarrinhoCompraItem, CarrinhoCompraItemRP>();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddScoped(CP => CarrinhoCompra.GetCarrinho(CP));
+            services.AddDistributedMemoryCache();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +58,8 @@ namespace SystemBeauty
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
