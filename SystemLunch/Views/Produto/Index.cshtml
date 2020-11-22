@@ -1,0 +1,11 @@
+﻿@model IEnumerable<SystemBeauty.ViewModels.ProdutoVM>
+
+<div class="title_top"><h2>Todos os Produtos</h2></div>
+<hr />
+<div class="row">
+    @foreach (var produto in Model)
+    {
+        <partial name="_ResumoProduto" for="@produto"/>
+    }
+</div>
+

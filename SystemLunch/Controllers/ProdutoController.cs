@@ -23,6 +23,26 @@ namespace SystemBeauty.Controllers
             _categoriaRepository = categoriaRepository;
         }
 
+        public IActionResult Index ()
+        {
+            var produto = _produtoRepository.ListProdutos;
+
+            List<ProdutoVM> lista = new List<ProdutoVM>();
+            foreach (var item in produto)
+            {
+                ProdutoVM produtoVM = new ProdutoVM();
+                produtoVM.ID = item.ID;
+                produtoVM.Nome = item.Nome;
+                produtoVM.DescricaoCurta = item.DescricaoCurta;
+                produtoVM.VolumeEmbalagem = item.VolumeEmbalagem;
+                produtoVM.Preco = item.Preco;
+                produtoVM.ImageURL = item.ImageURL;
+                produtoVM.QtdEstoque = item.QtdEstoque;
+                lista.Add(produtoVM);
+            }
+            return View(lista);
+        }
+
         public IActionResult Lista()
         {
             var produto = _produtoRepository.ListProdutos;

@@ -28,23 +28,23 @@ namespace SystemBeauty.Models
         public List<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
         public decimal Total { get; set; }
 
-        ////BUSCA UM CARRINHO EXISTENTE OU CRIA UM NOVO
-        //public static CarrinhoCompra GetCarrinho(IServiceProvider services)
-        //{
-        //    //DEFINE UMA SESSÃO
-        //    ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-        //    //OBTÉM UM SERVICO DO TIPO CONTEXT
-        //    var context = services.GetService<SBContext>();
-        //    //BUSCA UM ID DO CARRINHO OU GERA UM NOVO
-        //    string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
-        //    //ATRIBUI O ID DO CARRINHO NA SESSÃO
-        //    session.SetString("CarrinhoId", carrinhoId);
-        //    //RETORNA O CARRINHO COM O CONTEXTO E O ID ATRIBUIDO OU OBTIDO
-        //    return new CarrinhoCompra(context)
-        //    {
-        //        CarrinhoCompraID = carrinhoId
-        //    };
-        //}
+        //BUSCA UM CARRINHO EXISTENTE OU CRIA UM NOVO
+        public static CarrinhoCompra GetCarrinho(IServiceProvider services)
+        {
+            //DEFINE UMA SESSÃO
+            ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
+            //OBTÉM UM SERVICO DO TIPO CONTEXT
+            var context = services.GetService<SBContext>();
+            //BUSCA UM ID DO CARRINHO OU GERA UM NOVO
+            string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
+            //ATRIBUI O ID DO CARRINHO NA SESSÃO
+            session.SetString("CarrinhoId", carrinhoId);
+            //RETORNA O CARRINHO COM O CONTEXTO E O ID ATRIBUIDO OU OBTIDO
+            return new CarrinhoCompra(context)
+            {
+                CarrinhoCompraID = carrinhoId
+            };
+        }
 
         //public void AdicionarAoCarrinho(Produto produto, int qtd)
         //{

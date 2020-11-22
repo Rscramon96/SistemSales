@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore.SqlServer;
 using SystemBeauty.Repositories;
 using SystemBeauty.Models;
 using Microsoft.AspNetCore.Http;
+using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.Interfaces;
 
 namespace SystemBeauty
@@ -34,6 +35,7 @@ namespace SystemBeauty
             services.AddTransient<ICategoriaRepository, CategoriaRepositoryRP>();
             services.AddTransient<IProdutoRepository, ProdutoRepositoryRP>();
             services.AddTransient<ICarrinhoCompraItem, CarrinhoCompraItemRP>();
+            services.AddTransient<ICarrinhoCompra, CarrinhoCompraRP>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

@@ -47,10 +47,5 @@ namespace SystemBeauty.Controllers
             }
             return View(lista);
         }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }

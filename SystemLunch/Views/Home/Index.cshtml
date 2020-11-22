@@ -1,12 +1,2 @@
 ﻿@model IEnumerable<SystemBeauty.ViewModels.ProdutoVM>
 
-<div class="title_top"><h2>Todos os Produtos</h2></div>
-<hr />
-<div class="row">
-    @foreach (var produto in Model)
-    {
-        @*@Html.Partial("_ResumoProduto", produto);*@
-        <partial name="_ResumoProduto" for="@produto"/>
-    }
-</div>
-
