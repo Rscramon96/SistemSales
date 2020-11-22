@@ -27,8 +27,8 @@ namespace SystemBeauty.Models
         public string ImageURL { get; set; }
         public string ImageThumbNailURL { get; set; }
         public int QtdEstoque { get; set; }
-        public bool ProdutoPreferido { get; set; }
         public bool EmEstoque { get; set; }
+        public int QtdVendido { get; set; }
         public int CategoriaID { get; set; }
         public virtual Categoria Categoria { get; set; }
     }

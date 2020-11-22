@@ -22,8 +22,7 @@ namespace SystemBeauty.Controllers
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
         }
-
-        public IActionResult Index ()
+        public IActionResult Index()
         {
             var produto = _produtoRepository.ListProdutos;
 

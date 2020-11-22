@@ -77,8 +77,8 @@ namespace SystemBeauty.ViewModels
         [Required]
         [Display(Name = "Estoque")]
         public int QtdEstoque { get; set; }
-        public bool ProdutoPreferido { get; set; }
         public bool EmEstoque { get; set; }
+        public int QtdVendido { get; set; }
 
         [Required]
         public int CategoriaID { get; set; }

@@ -1,10 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SystemBeauty.Models;
 using SystemBeauty.Repositories;
 using SystemBeauty.ViewModels;
@@ -14,26 +9,17 @@ namespace SystemBeauty.Controllers
     public class HomeController : Controller
     {
         private readonly IProdutoRepository _produtoRepository;
-        private readonly ICategoriaRepository _categoriaRepository;
 
-        //private readonly ILogger<HomeController> _logger;
-
-        //public HomeController(ILogger<HomeController> logger)
-        //{
-        //    _logger = logger;
-        //}
-
-        public HomeController(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository)
+        public HomeController(IProdutoRepository produtoRepository)
         {
             _produtoRepository = produtoRepository;
-            _categoriaRepository = categoriaRepository;
         }
         public IActionResult Index()
-        {
-            var produto = _produtoRepository.ListProdutos;
+        {            
+            var produtos= _produtoRepository.ListMaisVendidos;
 
             List<ProdutoVM> lista = new List<ProdutoVM>();
-            foreach (var item in produto)
+            foreach (var item in produtos)
             {
                 ProdutoVM produtoVM = new ProdutoVM();
                 produtoVM.ID = item.ID;
@@ -43,6 +29,8 @@ namespace SystemBeauty.Controllers
                 produtoVM.Preco = item.Preco;
                 produtoVM.ImageURL = item.ImageURL;
                 produtoVM.QtdEstoque = item.QtdEstoque;
+                produtoVM.QtdVendido = item.QtdVendido;
+
                 lista.Add(produtoVM);
             }
             return View(lista);

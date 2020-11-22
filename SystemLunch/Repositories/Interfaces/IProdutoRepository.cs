@@ -9,7 +9,7 @@ namespace SystemBeauty.Repositories
     public interface IProdutoRepository
     {
         IEnumerable<Produto> ListProdutos { get; }
-        IEnumerable<Produto> ListProdutosPreferidos { get; }
+        IEnumerable<Produto> ListMaisVendidos { get; }
         Produto GetProdutoById(int ID);
         Produto AddProduto(Produto produto);
         Produto UpdateProduto(Produto produto);
