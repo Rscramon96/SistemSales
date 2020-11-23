@@ -1,20 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SystemBeauty.Data;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.SqlServer;
-using SystemBeauty.Repositories;
 using SystemBeauty.Models;
-using Microsoft.AspNetCore.Http;
+using SystemBeauty.Repositories;
 using SystemBeauty.Repositories.Interfaces;
-using SystemBeauty.Interfaces;
+using SystemBeauty.Services;
+using SystemBeauty.Services.Interfaces;
 
 namespace SystemBeauty
 {
@@ -32,10 +28,12 @@ namespace SystemBeauty
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<SBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddTransient<ICategoriaRepository, CategoriaRepositoryRP>();
             services.AddTransient<IProdutoRepository, ProdutoRepositoryRP>();
             services.AddTransient<ICarrinhoCompraItem, CarrinhoCompraItemRP>();
-            services.AddTransient<ICarrinhoCompra, CarrinhoCompraRP>();
+
+            services.AddTransient<ICarrinhoCompra, CarrinhoCompraServices>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

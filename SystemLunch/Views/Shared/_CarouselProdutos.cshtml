@@ -8,19 +8,19 @@
         <li data-target="#carouselprodutos" data-slide-to="3"></li>
         <li data-target="#carouselprodutos" data-slide-to="4"></li>
     </ol>
-    <div class="carousel-inner bg-secondary">
-        <div class="carousel-item active">
-            <img src="~/images/Logo.png.png" class="d-block w-50 h-50" alt="Lanche">
-            <div class="carousel-caption d-none d-md-block">
+        <div class="carousel-inner bg-secondary">
+            <div class="carousel-item active">
+                <img src="~/images/Logo.png.png" class="d-block w-50" alt="Mais Vendidos">
+                <div class="carousel-caption d-none d-md-block"></div>
             </div>
+            @foreach (var produto in Model.Take(4))
+            {
+                <div class="carousel-item row justify-content-center">
+                    <img src="@Html.DisplayFor(model => produto.ImageURL)" class="d-block w-50" alt="@Html.DisplayFor(model => produto.Nome)" />
+                </div>
+            }
         </div>
-        @foreach (var produto in Model.Take(4))
-        {
-            <div class="carousel-item row justify-content-center">
-                <img src="@Html.DisplayFor(model => produto.ImageURL)" class="d-block w-50 h-50" alt="Produto" />
-            </div>
-        }
-    </div>
+
     <a class="carousel-control-prev" href="#carouselprodutos" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     </a>

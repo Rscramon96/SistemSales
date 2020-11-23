@@ -1,24 +1,15 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using SystemBeauty.Data;
-using SystemBeauty.Interfaces;
 
 namespace SystemBeauty.Models
 {
     public class CarrinhoCompra
     {
         private readonly SBContext _context;
-        private readonly ICarrinhoCompraItem _carrinhoCompraItem;
 
-        public CarrinhoCompra(ICarrinhoCompraItem carrinhoCompraItem)
-        {
-            _carrinhoCompraItem = carrinhoCompraItem;
-        }
         public CarrinhoCompra(SBContext context)
         {
             _context = context;

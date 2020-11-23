@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using SystemBeauty.Models;
-using SystemBeauty.Repositories;
+using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.ViewModels;
 
 namespace SystemBeauty.Controllers
@@ -34,6 +33,11 @@ namespace SystemBeauty.Controllers
                 lista.Add(produtoVM);
             }
             return View(lista);
+        }
+
+        public IActionResult Contato ()
+        {
+            return View();
         }
     }
 }

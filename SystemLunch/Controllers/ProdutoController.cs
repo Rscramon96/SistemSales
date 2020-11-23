@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SystemBeauty.Data;
+using System;
+using System.Collections.Generic;
 using SystemBeauty.Models;
-using SystemBeauty.Repositories;
+using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.ViewModels;
 
 namespace SystemBeauty.Controllers
@@ -131,8 +128,6 @@ namespace SystemBeauty.Controllers
                 produto.CategoriaID = produtoVM.CategoriaID;
 
                 _produtoRepository.AddProduto(produto);
-                //_context.Add(produto);
-                //_context.SaveChanges();
                 return RedirectToAction(nameof(Lista));
             }
             ViewData["CategoriaID"] = new SelectList(_categoriaRepository.ListCategorias, "ID", "Nome", produtoVM.CategoriaID);
@@ -142,7 +137,7 @@ namespace SystemBeauty.Controllers
         public IActionResult Editar(int id)
         {
             var produto = _produtoRepository.GetProdutoById(id);
-            //var produto = _context.Produtos.Find(id);
+
             if (produto == null)
             {
                 return NotFound();
@@ -183,7 +178,7 @@ namespace SystemBeauty.Controllers
             if (ModelState.IsValid)
             {
                 var produto = _produtoRepository.GetProdutoById(produtoVM.ID);
-                //var produto = _context.Produtos.Find(produtoVM.ID);
+
                 try
                 {
                     produto.Nome = produtoVM.Nome;
@@ -202,8 +197,6 @@ namespace SystemBeauty.Controllers
                     produto.CategoriaID = produtoVM.CategoriaID;
 
                     _produtoRepository.UpdateProduto(produto);
-                    //_context.Update(produto);
-                    //_context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -225,7 +218,6 @@ namespace SystemBeauty.Controllers
         public IActionResult Excluir(int? id)
         {
             var produto = _produtoRepository.GetProdutoById(Convert.ToInt32(id));
-            //var produto = _context.Produtos.Find(id);
 
             if (produto == null)
             {
@@ -265,7 +257,7 @@ namespace SystemBeauty.Controllers
         public IActionResult Excluir(int id)
         {
             var produto = _produtoRepository.GetProdutoById(id);
-            //var produto = _context.Produtos.Find(id);
+
             if (produto.ID == id)
             {
                 var produtoVM = new ProdutoVM();
@@ -288,8 +280,6 @@ namespace SystemBeauty.Controllers
                 produto.CategoriaID = produtoVM.CategoriaID;
 
                 _produtoRepository.UpdateProduto(produto);
-                //_context.Produtos.Update(produto);
-                //_context.SaveChanges();
             }
             else
             {

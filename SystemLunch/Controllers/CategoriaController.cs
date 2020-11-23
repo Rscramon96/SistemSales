@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SystemBeauty.Data;
+using System;
+using System.Collections.Generic;
 using SystemBeauty.Models;
-using SystemBeauty.Repositories;
+using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.ViewModels;
 
 namespace SystemBeauty.Controllers
@@ -23,7 +19,6 @@ namespace SystemBeauty.Controllers
         public IActionResult Lista()
         {
             var categoria = _categoriaRepository.ListCategorias;
-            //var categoria = _context.Categorias.Where(x => !x.Excluir).ToList();
             List<CategoriaVM> lista = new List<CategoriaVM>();
 
             foreach (var item in categoria)
@@ -56,8 +51,6 @@ namespace SystemBeauty.Controllers
                 categoria.Descricao = categoriaVM.Descricao;
                 categoria.DataCadastro = DateTime.Now;
 
-                //_context.Add(categoria);
-                //_context.SaveChanges();
                 _categoriaRepository.AddCategoria(categoria);
                 return RedirectToAction(nameof(Lista));
             }
@@ -67,7 +60,7 @@ namespace SystemBeauty.Controllers
         public IActionResult Editar(int id)
         {
             var categoria = _categoriaRepository.GetCategoriaByID(id);
-            //var categoria = _context.Categorias.Find(id);
+
             if (categoria == null)
             {
                 return NotFound();
@@ -96,7 +89,7 @@ namespace SystemBeauty.Controllers
             if (ModelState.IsValid)
             {
                 var categoria = _categoriaRepository.GetCategoriaByID(categoriaVM.ID);
-                //var categoria = _context.Categorias.Find(categoriaVM.ID);
+
                 try
                 {
                     categoria.ID = categoriaVM.ID;
@@ -107,8 +100,6 @@ namespace SystemBeauty.Controllers
                     categoria.Excluir = categoriaVM.Excluir;
 
                     _categoriaRepository.UpdateCategoria(categoria);
-                    //_context.Categorias.Update(categoria);
-                    //_context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -129,7 +120,6 @@ namespace SystemBeauty.Controllers
         public IActionResult Excluir(int id)
         {
             var categoria = _categoriaRepository.GetCategoriaByID(id);
-            //var categoria = _context.Categorias.Find(id);
 
             if (categoria == null)
             {
@@ -157,7 +147,7 @@ namespace SystemBeauty.Controllers
         public IActionResult Excluir(int? id)
         {
             var categoria = _categoriaRepository.GetCategoriaByID(Convert.ToInt32(id));
-            //var categoria = _context.Categorias.Find(id);
+
             if (categoria.ID == id)
             {
                 var categoriaVM = new CategoriaVM();
@@ -169,8 +159,6 @@ namespace SystemBeauty.Controllers
                 categoria.Excluir = true;
 
                 _categoriaRepository.UpdateCategoria(categoria);
-                //_context.Categorias.Update(categoria);
-                //_context.SaveChanges();
             }
             else
             {

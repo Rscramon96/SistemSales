@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SystemBeauty.Models;
-using SystemBeauty.Repositories;
 using SystemBeauty.Repositories.Interfaces;
+using SystemBeauty.Services.Interfaces;
 using SystemBeauty.ViewModels;
 
 namespace SystemBeauty.Controllers
@@ -20,9 +16,9 @@ namespace SystemBeauty.Controllers
             _produtoRepository = produtoRepository;
             _carrinhoCompra = carrinhoCompra;
         }
-        public IActionResult Index(List<CarrinhoCompraItem> CarrinhoCompraItens, string ID)
+        public IActionResult Index(string ID)
         {
-            var ListaProdutos = _carrinhoCompra.GetCarrinhoCompraItens(CarrinhoCompraItens, ID);
+            var ListaProdutos = _carrinhoCompra.GetCarrinhoCompraItens(ID);
 
             var CarrinhoCompra = new CarrinhoCompraVM
             {

@@ -1,39 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using SystemBeauty.Data;
-using SystemBeauty.Interfaces;
+﻿using System.Collections.Generic;
 using SystemBeauty.Models;
 using SystemBeauty.Repositories.Interfaces;
+using SystemBeauty.Services.Interfaces;
 
-namespace SystemBeauty.Repositories
+namespace SystemBeauty.Services
 {
-    public class CarrinhoCompraRP : ICarrinhoCompra
+    public class CarrinhoCompraServices : ICarrinhoCompra
     {
         private readonly ICarrinhoCompraItem _carrinhoCompraItem;
-        public CarrinhoCompraRP(ICarrinhoCompraItem carrinhoCompraItem)
+        public CarrinhoCompraServices(ICarrinhoCompraItem carrinhoCompraItem)
         {
             _carrinhoCompraItem = carrinhoCompraItem;
         }
-        public CarrinhoCompra GetCarrinho(IServiceProvider services)
-        {
-            //DEFINE UMA SESSÃO
-            ISession session = services.GetRequiredService<IHttpContextAccessor>()?.HttpContext.Session;
-            //OBTÉM UM SERVICO DO TIPO CONTEXT
-            var context = services.GetService<SBContext>();
-            //BUSCA UM ID DO CARRINHO OU GERA UM NOVO
-            string carrinhoId = session.GetString("CarrinhoId") ?? Guid.NewGuid().ToString();
-            //ATRIBUI O ID DO CARRINHO NA SESSÃO
-            session.SetString("CarrinhoId", carrinhoId);
-            //RETORNA O CARRINHO COM O CONTEXTO E O ID ATRIBUIDO OU OBTIDO
-            return new CarrinhoCompra(context)
-            {
-                CarrinhoCompraID = carrinhoId
-            };
-        }
+
         public CarrinhoCompraItem Adicionar(Produto produto, int qtd, string CarrinhoCompraID)
         {
             var carrinhoCompraItem = _carrinhoCompraItem.FindItem(produto, CarrinhoCompraID);
@@ -76,8 +55,9 @@ namespace SystemBeauty.Repositories
             return quantidadeLocal;
         }
 
-        public List<CarrinhoCompraItem> GetCarrinhoCompraItens(List<CarrinhoCompraItem> CarrinhoCompraItens,string CarrinhoCompraID)
+        public List<CarrinhoCompraItem> GetCarrinhoCompraItens(string CarrinhoCompraID)
         {
+            List<CarrinhoCompraItem> CarrinhoCompraItens = new List<CarrinhoCompraItem>();
             return CarrinhoCompraItens ?? (CarrinhoCompraItens = _carrinhoCompraItem.ListItens(CarrinhoCompraID));
         }
         public string Limpar(string CarrinhoCompraID)
