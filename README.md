@@ -11,10 +11,12 @@ O projeto tem o objetivo ser um sistemas para auxiliar nas vendas online e futur
 - Entity Framework 3.1.9
 - Asp Net Core Identity 2.2 
 - Injection Dependecy
+      - Repository
+      - (Futuramente) Services
 - Razor
 - Bootstrap
 
-#### 🚧 Sistemas de Vendas Online (50%) 🚧
+#### 🚧 Sistemas de Vendas Online (65%) 🚧
 
 #### Funcionalidades
 
@@ -22,12 +24,13 @@ O projeto tem o objetivo ser um sistemas para auxiliar nas vendas online e futur
 - [x] Página exibindo todos o produtos.
 - [x] Página exibindo os detalhes do produto selecionado.
 - [x] Carrinho de compras.
-- [x] Área restrita (Cliente/ ADM).
+- [ ] Área restrita (Cliente/ ADM).
 - [x] CRUD para cadastro de produtos e categorias de produtos.
-- [ ] 
-- [ ] 
-- [ ] 
-      
+- [ ] Paginação
+- [ ] Filtro de dados
+- [ ] Detalhes do pedido
+- [ ] Relatório de pedidos
+
 #### Como rodar localmente
 
 Antes de começar você precisará ter em sua máquina as seguintes ferramentas:
