@@ -15,9 +15,20 @@ namespace SystemBeauty.Repositories
             _context = contexto;
         }
 
-        public IEnumerable<Produto> ListProdutos => _context.Produtos.OrderBy(p => p.ID).Where(p => !p.Excluir).ToList();
+        IEnumerable<Produto> IProdutoRepository.ListProdutos()
+        {
+            return _context.Produtos.OrderBy(p => p.ID).Where(p => !p.Excluir).ToList();
+        }
 
-        public IEnumerable<Produto> ListMaisVendidos => _context.Produtos.OrderByDescending(p => p.QtdVendido).Where(p => !p.Excluir).ToList();
+        IEnumerable<Produto> IProdutoRepository.ListMaisVendidos()
+        {
+            return _context.Produtos.OrderByDescending(p => p.QtdVendido).Where(p => !p.Excluir).ToList();
+        }
+
+        public IEnumerable<Produto> ProdutoPorCategoria(int CategoriaID)
+        {
+            return _context.Produtos.OrderBy(p => p.ID).Where(p => p.CategoriaID == CategoriaID).ToList();
+        }
 
         public Produto AddProduto(Produto produto)
         {

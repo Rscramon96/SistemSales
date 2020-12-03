@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SystemBeauty.Models;
+using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.Services.Interfaces;
 using SystemBeauty.ViewModels;
 
@@ -10,23 +11,45 @@ namespace SystemBeauty.Services
 {
     public class ProdutoServices : IProdutoService
     {
-        private readonly IProdutoService _produtõ;
+        private readonly IProdutoRepository _produtoRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
 
-        public ProdutoServices(IProdutoService produto)
+        public ProdutoServices(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository)
         {
-            _produtõ = produto;
+            _produtoRepository = produtoRepository;
+            _categoriaRepository = categoriaRepository;
         }
 
-        public Produto ExcluirProduto(Produto produto)
+        public Produto AddProduto(Produto produto)
         {
-            produto.DataExclusao = DateTime.Now;
-            produto.Excluir = true;
-
-            return produto;
+            return _produtoRepository.AddProduto(produto);
+        }
+        public Produto UpdateProduto(Produto produto)
+        {
+            return _produtoRepository.UpdateProduto(produto);
         }
 
-        public IEnumerable<ProdutoVM> ListaProduto(IEnumerable<Produto> produtos)
+        public Produto GetProdutoById(int ID)
         {
+            return _produtoRepository.GetProdutoById(ID);
+        }
+
+        public IEnumerable<Categoria> ListaCategorias()
+        {
+            return _categoriaRepository.ListaCategorias();
+        }
+        public IEnumerable<Produto> ProdutoPorCategoria(int ID)
+        {
+            return _produtoRepository.ProdutoPorCategoria(ID);
+        }
+        public IEnumerable<Produto> ListaMaisVendidos()
+        {
+            return _produtoRepository.ListaMaisVendidos();
+        }
+        public IEnumerable<ProdutoVM> ListaProduto()
+        {
+            var produtos = _produtoRepository.ListaProdutos();
+
             List<ProdutoVM> lista = new List<ProdutoVM>();
             foreach (var item in produtos)
             {

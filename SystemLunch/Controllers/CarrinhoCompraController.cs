@@ -8,12 +8,12 @@ namespace SystemBeauty.Controllers
 {
     public class CarrinhoCompraController : Controller
     {
-        private readonly IProdutoRepository _produtoRepository;
+        private readonly IProdutoService _produtoService;
         private readonly ICarrinhoCompraService _carrinhoCompra;
 
-        public CarrinhoCompraController(IProdutoRepository produtoRepository, ICarrinhoCompraService carrinhoCompra)
+        public CarrinhoCompraController(IProdutoService produtoService, ICarrinhoCompraService carrinhoCompra)
         {
-            _produtoRepository = produtoRepository;
+            _produtoService = produtoService;
             _carrinhoCompra = carrinhoCompra;
         }
         public IActionResult Index(string ID)
@@ -29,7 +29,7 @@ namespace SystemBeauty.Controllers
         }
         public RedirectToActionResult AddItemCarrinho (CarrinhoCompraItem item, string CarrinhoCompraID)
         {
-            var produtoselecionado = _produtoRepository.GetProdutoById(item.ID);
+            var produtoselecionado = _produtoService.GetProdutoById(item.ID);
 
             if (produtoselecionado != null)
             {
@@ -39,7 +39,7 @@ namespace SystemBeauty.Controllers
         }
         public IActionResult RemoverItemCarrinho (CarrinhoCompraItem item, string CarrinhoCompraID)
         {
-            var produtoselecionado = _produtoRepository.GetProdutoById(item.ID);
+            var produtoselecionado = _produtoService.GetProdutoById(item.ID);
 
             if (produtoselecionado != null)
             {

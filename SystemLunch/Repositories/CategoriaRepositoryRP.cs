@@ -13,8 +13,11 @@ namespace SystemBeauty.Repositories
         {
             _context = contexto;
         }
-        public IEnumerable<Categoria> ListCategorias => _context.Categorias.Where(c => !c.Excluir).ToList();
 
+        IEnumerable<Categoria> ICategoriaRepository.ListaCategorias()
+        {
+            return _context.Categorias.Where(c => !c.Excluir).ToList();
+        }
         public Categoria AddCategoria(Categoria categoria)
         {
             _context.Add(categoria);

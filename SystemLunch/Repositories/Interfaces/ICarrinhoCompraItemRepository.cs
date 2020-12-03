@@ -3,7 +3,7 @@ using SystemBeauty.Models;
 
 namespace SystemBeauty.Repositories.Interfaces
 {
-    public  interface ICarrinhoCompraItem
+    public  interface ICarrinhoCompraItemRepository
     {
         CarrinhoCompraItem AddCarrinhoCompraItem (CarrinhoCompraItem carrinhoCompraItem);
         CarrinhoCompraItem FindItem (Produto produto, string ID);

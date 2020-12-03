@@ -7,8 +7,8 @@ namespace SystemBeauty.Services
 {
     public class CarrinhoCompraServices : ICarrinhoCompraService
     {
-        private readonly ICarrinhoCompraItem _carrinhoCompraItem;
-        public CarrinhoCompraServices(ICarrinhoCompraItem carrinhoCompraItem)
+        private readonly ICarrinhoCompraItemRepository _carrinhoCompraItem;
+        public CarrinhoCompraServices(ICarrinhoCompraItemRepository carrinhoCompraItem)
         {
             _carrinhoCompraItem = carrinhoCompraItem;
         }

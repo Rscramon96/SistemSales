@@ -7,7 +7,7 @@ using SystemBeauty.Repositories.Interfaces;
 
 namespace SystemBeauty.Repositories
 {
-    public class CarrinhoCompraItemRP : ICarrinhoCompraItem
+    public class CarrinhoCompraItemRP : ICarrinhoCompraItemRepository
     {
         private readonly SBContext _context;
 
@@ -44,7 +44,7 @@ namespace SystemBeauty.Repositories
             return null;
         }
 
-        List<CarrinhoCompraItem> ICarrinhoCompraItem.ListItens(string ID)
+        List<CarrinhoCompraItem> ICarrinhoCompraItemRepository.ListItens(string ID)
         {
             var list = _context.CarrinhoCompraItens.Where(c => c.CarrinhoItemID == ID).Include(p => p.Produto).ToList();
             return list;

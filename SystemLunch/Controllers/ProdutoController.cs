@@ -12,49 +12,36 @@ namespace SystemBeauty.Controllers
 {
     public class ProdutoController : Controller
     {
-        private readonly IProdutoRepository _produtoRepository;
-        private readonly ICategoriaRepository _categoriaRepository;
         private readonly IProdutoService _produtoService;
 
-        public ProdutoController(IProdutoRepository produtoRepository,
-            ICategoriaRepository categoriaRepository,
-            IProdutoService produtoService)
+        public ProdutoController(IProdutoService produtoService)
         {
-            _produtoRepository = produtoRepository;
-            _categoriaRepository = categoriaRepository;
             _produtoService = produtoService;
         }
         public IActionResult Index()
         {
-            var produtoVM = _produtoService.ListaProduto(_produtoRepository.ListProdutos);
+            var produtoVM = _produtoService.ListaProduto();
             return View(produtoVM);
         }
 
-        public IActionResult Lista(string categoria)
+        public IActionResult Lista(Categoria categoria)
         {
-            var produtoVM = _produtoService.ListaProduto(_produtoRepository.ListProdutos);
+            var produtoVM = _produtoService.ListaProduto();
 
-            string _categoria = categoria;
-            IEnumerable<ProdutoVM> produtos;
-            string categoriaatual = string.Empty;
-
-            if (string.IsNullOrEmpty(categoria))
+            if (categoria.ID == null)
             {
-                produtos = produtoVM;
-                categoria = "Todos os Produtos.";
+                return View(produtoVM);
             }
             else
             {
-
+                var produtoCategoria = _produtoService.ProdutoPorCategoria(categoria.ID);
+                return View(produtoCategoria);
             }
-
-
-            return View(produtoVM);
         }
 
         public IActionResult Detalhes(int id)
         {
-            var produto = _produtoRepository.GetProdutoById(id);
+            var produto = _produtoService.GetProdutoById(id);
 
             if (produto == null)
             {
@@ -74,7 +61,7 @@ namespace SystemBeauty.Controllers
 
         public IActionResult Cadastrar()
         {
-            ViewData["CategoriaID"] = new SelectList(_categoriaRepository.ListCategorias, "ID", "Nome");
+            ViewData["CategoriaID"] = new SelectList(_produtoService.ListaCategorias(), "ID", "Nome");
             return View();
         }
 
@@ -86,16 +73,16 @@ namespace SystemBeauty.Controllers
             {
                 var produto = _produtoService.ProdutoVM_To_Produto(produtoVM);
 
-                _produtoRepository.AddProduto(produto);
+                _produtoService.AddProduto(produto);
                 return RedirectToAction(nameof(Lista));
             }
-            ViewData["CategoriaID"] = new SelectList(_categoriaRepository.ListCategorias, "ID", "Nome", produtoVM.CategoriaID);
+            ViewData["CategoriaID"] = new SelectList(_produtoService.ListaCategorias(), "ID", "Nome", produtoVM.CategoriaID);
             return View(produtoVM);
         }
 
         public IActionResult Editar(int id)
         {
-            var produto = _produtoRepository.GetProdutoById(id);
+            var produto = _produtoService.GetProdutoById(id);
 
             if (produto == null)
             {
@@ -105,14 +92,14 @@ namespace SystemBeauty.Controllers
             try
             {
                 var produtoVM = _produtoService.Produto_To_ProdutoVM(produto);
-                ViewData["CategoriaID"] = new SelectList(_categoriaRepository.ListCategorias, "ID", "Nome", produtoVM.CategoriaID = produto.CategoriaID);
+                ViewData["CategoriaID"] = new SelectList(_produtoService.ListaCategorias(), "ID", "Nome", produtoVM.CategoriaID = produto.CategoriaID);
 
                 return View(produtoVM);
             }
             catch (Exception)
             {
                 return NotFound();
-            }            
+            }
         }
 
         [HttpPost]
@@ -121,12 +108,12 @@ namespace SystemBeauty.Controllers
         {
             if (ModelState.IsValid)
             {
-                var produto = _produtoRepository.GetProdutoById(produtoVM.ID);
+                var produto = _produtoService.GetProdutoById(produtoVM.ID);
 
                 try
                 {
                     produto = _produtoService.ProdutoVM_To_Produto(produtoVM);
-                    _produtoRepository.UpdateProduto(produto);
+                    _produtoService.UpdateProduto(produto);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -141,13 +128,13 @@ namespace SystemBeauty.Controllers
                 }
                 return RedirectToAction(nameof(Lista));
             }
-            ViewData["CategoriaID"] = new SelectList(_categoriaRepository.ListCategorias, "ID", "Nome", produtoVM.CategoriaID);
+            ViewData["CategoriaID"] = new SelectList(_produtoService.ListaCategorias(), "ID", "Nome", produtoVM.CategoriaID);
             return View(produtoVM);
         }
 
         public IActionResult Excluir(int? id)
         {
-            var produto = _produtoRepository.GetProdutoById(Convert.ToInt32(id));
+            var produto = _produtoService.GetProdutoById(Convert.ToInt32(id));
 
             if (produto == null)
             {
@@ -169,12 +156,11 @@ namespace SystemBeauty.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Excluir(int id)
         {
-            var produto = _produtoRepository.GetProdutoById(id);
+            var produto = _produtoService.GetProdutoById(id);
 
             if (produto.ID == id)
             {
-                produto = _produtoService.ExcluirProduto(produto);
-                _produtoRepository.UpdateProduto(produto);
+                _produtoService.UpdateProduto(produto);
             }
             else
             {

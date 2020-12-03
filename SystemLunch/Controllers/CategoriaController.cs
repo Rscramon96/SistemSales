@@ -3,22 +3,23 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using SystemBeauty.Models;
-using SystemBeauty.Repositories.Interfaces;
+using SystemBeauty.Services.Interfaces;
 using SystemBeauty.ViewModels;
 
 namespace SystemBeauty.Controllers
 {
     public class CategoriaController : Controller
     {
-        private readonly ICategoriaRepository _categoriaRepository;
-        public CategoriaController(ICategoriaRepository categoriaRepository)
+        private readonly ICategoriaService _categoriaService;
+
+        public CategoriaController(ICategoriaService categoriaService)
         {
-            _categoriaRepository = categoriaRepository;
+            _categoriaService = categoriaService;
         }
 
         public IActionResult Lista()
         {
-            var categoria = _categoriaRepository.ListCategorias;
+            var categoria = _categoriaService.ListaCategorias();
             List<CategoriaVM> lista = new List<CategoriaVM>();
 
             foreach (var item in categoria)
@@ -51,7 +52,7 @@ namespace SystemBeauty.Controllers
                 categoria.Descricao = categoriaVM.Descricao;
                 categoria.DataCadastro = DateTime.Now;
 
-                _categoriaRepository.AddCategoria(categoria);
+                _categoriaService.AddCategoria(categoria);
                 return RedirectToAction(nameof(Lista));
             }
             return View(categoriaVM);
@@ -59,7 +60,7 @@ namespace SystemBeauty.Controllers
 
         public IActionResult Editar(int id)
         {
-            var categoria = _categoriaRepository.GetCategoriaByID(id);
+            var categoria = _categoriaService.GetCategoriaByID(id);
 
             if (categoria == null)
             {
@@ -88,7 +89,7 @@ namespace SystemBeauty.Controllers
         {
             if (ModelState.IsValid)
             {
-                var categoria = _categoriaRepository.GetCategoriaByID(categoriaVM.ID);
+                var categoria = _categoriaService.GetCategoriaByID(categoriaVM.ID);
 
                 try
                 {
@@ -99,7 +100,7 @@ namespace SystemBeauty.Controllers
                     categoria.DataExclusao = categoria.DataExclusao;
                     categoria.Excluir = categoriaVM.Excluir;
 
-                    _categoriaRepository.UpdateCategoria(categoria);
+                    _categoriaService.UpdateCategoria(categoria);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,7 +120,7 @@ namespace SystemBeauty.Controllers
 
         public IActionResult Excluir(int id)
         {
-            var categoria = _categoriaRepository.GetCategoriaByID(id);
+            var categoria = _categoriaService.GetCategoriaByID(id);
 
             if (categoria == null)
             {
@@ -146,7 +147,7 @@ namespace SystemBeauty.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Excluir(int? id)
         {
-            var categoria = _categoriaRepository.GetCategoriaByID(Convert.ToInt32(id));
+            var categoria = _categoriaService.GetCategoriaByID(Convert.ToInt32(id));
 
             if (categoria.ID == id)
             {
@@ -158,7 +159,7 @@ namespace SystemBeauty.Controllers
                 categoria.DataExclusao = DateTime.Now;
                 categoria.Excluir = true;
 
-                _categoriaRepository.UpdateCategoria(categoria);
+                _categoriaService.UpdateCategoria(categoria);
             }
             else
             {
