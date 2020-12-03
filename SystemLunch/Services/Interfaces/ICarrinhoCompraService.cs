@@ -4,7 +4,7 @@ using SystemBeauty.Models;
 
 namespace SystemBeauty.Services.Interfaces
 {
-    public interface ICarrinhoCompra
+    public interface ICarrinhoCompraService
     {
         //CarrinhoCompra GetCarrinho(IServiceProvider services);
         CarrinhoCompraItem Adicionar(Produto produto, int qtd, string CarrinhoCompraID);

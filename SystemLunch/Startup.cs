@@ -33,7 +33,7 @@ namespace SystemBeauty
             services.AddTransient<IProdutoRepository, ProdutoRepositoryRP>();
             services.AddTransient<ICarrinhoCompraItem, CarrinhoCompraItemRP>();
 
-            services.AddTransient<ICarrinhoCompra, CarrinhoCompraServices>();
+            services.AddTransient<ICarrinhoCompraService, CarrinhoCompraServices>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

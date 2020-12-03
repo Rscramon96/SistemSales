@@ -12,9 +12,9 @@ namespace SystemBeauty.Components
     public class CarrinhoResumo : ViewComponent
     {
         private readonly CarrinhoCompra _carrinho;
-        private readonly ICarrinhoCompra _carrinhoCompra;
+        private readonly ICarrinhoCompraService _carrinhoCompra;
 
-        public CarrinhoResumo(ICarrinhoCompra carrinhoCompra, CarrinhoCompra carrinho)
+        public CarrinhoResumo(ICarrinhoCompraService carrinhoCompra, CarrinhoCompra carrinho)
         {
             _carrinhoCompra = carrinhoCompra;
             _carrinho = carrinho;

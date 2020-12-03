@@ -15,7 +15,7 @@ namespace SystemBeauty.Repositories
             _context = contexto;
         }
 
-        public IEnumerable<Produto> ListProdutos => _context.Produtos.Where(p => !p.Excluir).ToList();
+        public IEnumerable<Produto> ListProdutos => _context.Produtos.OrderBy(p => p.ID).Where(p => !p.Excluir).ToList();
 
         public IEnumerable<Produto> ListMaisVendidos => _context.Produtos.OrderByDescending(p => p.QtdVendido).Where(p => !p.Excluir).ToList();
 

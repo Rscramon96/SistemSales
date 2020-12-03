@@ -9,9 +9,9 @@ namespace SystemBeauty.Controllers
     public class CarrinhoCompraController : Controller
     {
         private readonly IProdutoRepository _produtoRepository;
-        private readonly ICarrinhoCompra _carrinhoCompra;
+        private readonly ICarrinhoCompraService _carrinhoCompra;
 
-        public CarrinhoCompraController(IProdutoRepository produtoRepository, ICarrinhoCompra carrinhoCompra)
+        public CarrinhoCompraController(IProdutoRepository produtoRepository, ICarrinhoCompraService carrinhoCompra)
         {
             _produtoRepository = produtoRepository;
             _carrinhoCompra = carrinhoCompra;

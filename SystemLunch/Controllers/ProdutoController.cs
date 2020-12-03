@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using SystemBeauty.Models;
 using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.ViewModels;
+using SystemBeauty.Services.Interfaces;
 
 namespace SystemBeauty.Controllers
 {
@@ -13,56 +14,48 @@ namespace SystemBeauty.Controllers
     {
         private readonly IProdutoRepository _produtoRepository;
         private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IProdutoService _produtoService;
+
         public ProdutoController(IProdutoRepository produtoRepository,
-            ICategoriaRepository categoriaRepository)
+            ICategoriaRepository categoriaRepository,
+            IProdutoService produtoService)
         {
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
+            _produtoService = produtoService;
         }
         public IActionResult Index()
         {
-            var produto = _produtoRepository.ListProdutos;
-
-            List<ProdutoVM> lista = new List<ProdutoVM>();
-            foreach (var item in produto)
-            {
-                ProdutoVM produtoVM = new ProdutoVM();
-                produtoVM.ID = item.ID;
-                produtoVM.Nome = item.Nome;
-                produtoVM.DescricaoCurta = item.DescricaoCurta;
-                produtoVM.VolumeEmbalagem = item.VolumeEmbalagem;
-                produtoVM.Preco = item.Preco;
-                produtoVM.ImageURL = item.ImageURL;
-                produtoVM.QtdEstoque = item.QtdEstoque;
-                lista.Add(produtoVM);
-            }
-            return View(lista);
+            var produtoVM = _produtoService.ListaProduto(_produtoRepository.ListProdutos);
+            return View(produtoVM);
         }
 
-        public IActionResult Lista()
+        public IActionResult Lista(string categoria)
         {
-            var produto = _produtoRepository.ListProdutos;
-            
-            List<ProdutoVM> lista = new List<ProdutoVM>();
-            foreach (var item in produto)
+            var produtoVM = _produtoService.ListaProduto(_produtoRepository.ListProdutos);
+
+            string _categoria = categoria;
+            IEnumerable<ProdutoVM> produtos;
+            string categoriaatual = string.Empty;
+
+            if (string.IsNullOrEmpty(categoria))
             {
-                ProdutoVM produtoVM = new ProdutoVM();
-                produtoVM.ID = item.ID;
-                produtoVM.Nome = item.Nome;
-                produtoVM.DescricaoCurta = item.DescricaoCurta;
-                produtoVM.VolumeEmbalagem = item.VolumeEmbalagem;
-                produtoVM.Preco = item.Preco;
-                produtoVM.ImageURL = item.ImageURL;
-                produtoVM.QtdEstoque = item.QtdEstoque;
-                lista.Add(produtoVM);
+                produtos = produtoVM;
+                categoria = "Todos os Produtos.";
             }
-            return View(lista);
+            else
+            {
+
+            }
+
+
+            return View(produtoVM);
         }
 
         public IActionResult Detalhes(int id)
         {
             var produto = _produtoRepository.GetProdutoById(id);
-            //var produto = _context.Produtos.Find(id);
+
             if (produto == null)
             {
                 return NotFound();
@@ -70,25 +63,7 @@ namespace SystemBeauty.Controllers
 
             try
             {
-                var produtoVM = new ProdutoVM();
-
-                produtoVM.ID = produto.ID;
-                produtoVM.DataCadastro = produto.DataCadastro;
-                produtoVM.Nome = produto.Nome;
-                produtoVM.DescricaoCurta = produto.DescricaoCurta;
-                produtoVM.DescricaoAdicional = produto.DescricaoAdicional;
-                produtoVM.DescricaoProduto = produto.DescricaoProduto;
-                produtoVM.ModoUso = produto.ModoUso;
-                produtoVM.AcaoBeneficio = produto.AcaoBeneficio;
-                produtoVM.VolumeEmbalagem = produto.VolumeEmbalagem;
-                produtoVM.Composicao = produto.Composicao;
-                produtoVM.Indicacao = produto.Indicacao;
-                produtoVM.Preco = produto.Preco;
-                produtoVM.ImageURL = produto.ImageURL;
-                produtoVM.ImageThumbNailURL = produto.ImageThumbNailURL;
-                produtoVM.QtdEstoque = produto.QtdEstoque;
-                produtoVM.CategoriaID = produto.CategoriaID;
-
+                var produtoVM = _produtoService.Produto_To_ProdutoVM(produto);
                 return View(produtoVM);
             }
             catch (Exception)
@@ -109,23 +84,7 @@ namespace SystemBeauty.Controllers
         {
             if (ModelState.IsValid)
             {
-                var produto = new Produto();
-
-                produto.DataCadastro = DateTime.Now;
-                produto.Nome = produtoVM.Nome;
-                produto.DescricaoCurta = produtoVM.DescricaoCurta;
-                produto.DescricaoAdicional = produtoVM.DescricaoAdicional;
-                produto.DescricaoProduto = produtoVM.DescricaoProduto;
-                produto.ModoUso = produtoVM.ModoUso;
-                produto.AcaoBeneficio = produtoVM.AcaoBeneficio;
-                produto.VolumeEmbalagem = produtoVM.VolumeEmbalagem;
-                produto.Composicao = produtoVM.Composicao;
-                produto.Indicacao = produtoVM.Indicacao;
-                produto.Preco = produtoVM.Preco;
-                produto.ImageURL = produtoVM.ImageURL;
-                produto.ImageThumbNailURL = produtoVM.ImageThumbNailURL;
-                produto.QtdEstoque = produtoVM.QtdEstoque;
-                produto.CategoriaID = produtoVM.CategoriaID;
+                var produto = _produtoService.ProdutoVM_To_Produto(produtoVM);
 
                 _produtoRepository.AddProduto(produto);
                 return RedirectToAction(nameof(Lista));
@@ -145,22 +104,7 @@ namespace SystemBeauty.Controllers
 
             try
             {
-                var produtoVM = new ProdutoVM();
-
-                produtoVM.DataCadastro = produto.DataCadastro;
-                produtoVM.Nome = produto.Nome;
-                produtoVM.DescricaoCurta = produto.DescricaoCurta;
-                produtoVM.DescricaoAdicional = produto.DescricaoAdicional;
-                produtoVM.DescricaoProduto = produto.DescricaoProduto;
-                produtoVM.ModoUso = produto.ModoUso;
-                produtoVM.AcaoBeneficio = produto.AcaoBeneficio;
-                produtoVM.VolumeEmbalagem = produto.VolumeEmbalagem;
-                produtoVM.Composicao = produto.Composicao;
-                produtoVM.Indicacao = produto.Indicacao;
-                produtoVM.Preco = produto.Preco;
-                produtoVM.ImageURL = produto.ImageURL;
-                produtoVM.ImageThumbNailURL = produto.ImageThumbNailURL;
-                produtoVM.QtdEstoque = produto.QtdEstoque;                
+                var produtoVM = _produtoService.Produto_To_ProdutoVM(produto);
                 ViewData["CategoriaID"] = new SelectList(_categoriaRepository.ListCategorias, "ID", "Nome", produtoVM.CategoriaID = produto.CategoriaID);
 
                 return View(produtoVM);
@@ -181,21 +125,7 @@ namespace SystemBeauty.Controllers
 
                 try
                 {
-                    produto.Nome = produtoVM.Nome;
-                    produto.DescricaoCurta = produtoVM.DescricaoCurta;
-                    produto.DescricaoAdicional = produtoVM.DescricaoAdicional;
-                    produto.DescricaoProduto = produtoVM.DescricaoProduto;
-                    produto.ModoUso = produtoVM.ModoUso;
-                    produto.AcaoBeneficio = produtoVM.AcaoBeneficio;
-                    produto.VolumeEmbalagem = produtoVM.VolumeEmbalagem;
-                    produto.Composicao = produtoVM.Composicao;
-                    produto.Indicacao = produtoVM.Indicacao;
-                    produto.Preco = produtoVM.Preco;
-                    produto.ImageURL = produtoVM.ImageURL;
-                    produto.ImageThumbNailURL = produtoVM.ImageThumbNailURL;
-                    produto.QtdEstoque = produtoVM.QtdEstoque;
-                    produto.CategoriaID = produtoVM.CategoriaID;
-
+                    produto = _produtoService.ProdutoVM_To_Produto(produtoVM);
                     _produtoRepository.UpdateProduto(produto);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -226,24 +156,7 @@ namespace SystemBeauty.Controllers
 
             try
             {
-                var produtoVM = new ProdutoVM();
-
-                produtoVM.DataCadastro = produto.DataCadastro;
-                produtoVM.Nome = produto.Nome;
-                produtoVM.DescricaoCurta = produto.DescricaoCurta;
-                produtoVM.DescricaoAdicional = produto.DescricaoAdicional;
-                produtoVM.DescricaoProduto = produto.DescricaoProduto;
-                produtoVM.ModoUso = produto.ModoUso;
-                produtoVM.AcaoBeneficio = produto.AcaoBeneficio;
-                produtoVM.VolumeEmbalagem = produto.VolumeEmbalagem;
-                produtoVM.Composicao = produto.Composicao;
-                produtoVM.Indicacao = produto.Indicacao;
-                produtoVM.Preco = produto.Preco;
-                produtoVM.ImageURL = produto.ImageURL;
-                produtoVM.ImageThumbNailURL = produto.ImageThumbNailURL;
-                produtoVM.QtdEstoque = produto.QtdEstoque;
-                produtoVM.CategoriaID = produto.CategoriaID;
-
+                var produtoVM = _produtoService.Produto_To_ProdutoVM(produto);
                 return View(produtoVM);
             }
             catch (Exception)
@@ -260,25 +173,7 @@ namespace SystemBeauty.Controllers
 
             if (produto.ID == id)
             {
-                var produtoVM = new ProdutoVM();
-
-                produto.DataExclusao = DateTime.Now;
-                produto.Excluir = true;
-                produto.Nome = produtoVM.Nome;
-                produto.DescricaoCurta = produtoVM.DescricaoCurta;
-                produto.DescricaoAdicional = produtoVM.DescricaoAdicional;
-                produto.DescricaoProduto = produtoVM.DescricaoProduto;
-                produto.ModoUso = produtoVM.ModoUso;
-                produto.AcaoBeneficio = produtoVM.AcaoBeneficio;
-                produto.VolumeEmbalagem = produtoVM.VolumeEmbalagem;
-                produto.Composicao = produtoVM.Composicao;
-                produto.Indicacao = produtoVM.Indicacao;
-                produto.Preco = produtoVM.Preco;
-                produto.ImageURL = produtoVM.ImageURL;
-                produto.ImageThumbNailURL = produtoVM.ImageThumbNailURL;
-                produto.QtdEstoque = produtoVM.QtdEstoque;
-                produto.CategoriaID = produtoVM.CategoriaID;
-
+                produto = _produtoService.ExcluirProduto(produto);
                 _produtoRepository.UpdateProduto(produto);
             }
             else

@@ -5,7 +5,7 @@ using SystemBeauty.Services.Interfaces;
 
 namespace SystemBeauty.Services
 {
-    public class CarrinhoCompraServices : ICarrinhoCompra
+    public class CarrinhoCompraServices : ICarrinhoCompraService
     {
         private readonly ICarrinhoCompraItem _carrinhoCompraItem;
         public CarrinhoCompraServices(ICarrinhoCompraItem carrinhoCompraItem)
