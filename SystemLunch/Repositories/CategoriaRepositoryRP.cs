@@ -16,7 +16,7 @@ namespace SystemBeauty.Repositories
 
         IEnumerable<Categoria> ICategoriaRepository.ListaCategorias()
         {
-            return _context.Categorias.Where(c => !c.Excluir).ToList();
+            return _context.Categorias.OrderBy(c => c.Nome).Where(c => !c.Excluir).ToList();
         }
         public Categoria AddCategoria(Categoria categoria)
         {

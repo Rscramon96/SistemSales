@@ -1,0 +1,15 @@
+﻿<li class="dropdown nav-link">
+    <a asp-controller="Produto" asp-action="Index" class="dropdown-toggle text-white" data-toggle="dropdown">Produtos   </a>
+    <ul class="dropdown-menu" style="background-color:darkcyan">
+        <li class="nav-link">
+            <a asp-controller="Produto" asp-action="Index" asp-route-categoria="" class="text-white">Todos os Produtos</a>
+        </li>
+        <li class="dropdown-divider"></li>
+        @foreach (var categoria in Model)
+        {
+            <li class="nav-link">
+                <a asp-controller="Produto" asp-action="Index" asp-route-id="@categoria.ID" class="text-white">@categoria.Nome</a>
+            </li>
+        }
+    </ul>
+</li>

@@ -21,21 +21,13 @@ namespace SystemBeauty.Controllers
             _produtoService = produtoService;
             _mapper = mapper;
         }
-        public IActionResult Index()
-        {
-            IEnumerable<Produto> produtos = _produtoService.ListaProduto();
-            List<ProdutoVM> lista = new List<ProdutoVM>();
-            lista = _mapper.Map<List<ProdutoVM>>(produtos);            
-            return View(lista);
-        }
-
-        public IActionResult Lista(Categoria categoria)
+        public IActionResult Index(Categoria categoria)
         {
             IEnumerable<Produto> produtos = _produtoService.ListaProduto();
             List<ProdutoVM> lista = new List<ProdutoVM>();
             lista = _mapper.Map<List<ProdutoVM>>(produtos);
 
-            if (categoria.ID == null)
+            if (categoria.ID == 0)
             {
                 return View(lista);
             }
@@ -43,9 +35,18 @@ namespace SystemBeauty.Controllers
             {
                 IEnumerable<Produto> produtoCategoria = _produtoService.ProdutoPorCategoria(categoria.ID);
                 List<ProdutoVM> listaProdutoCategoria = new List<ProdutoVM>();
-                lista = _mapper.Map<List<ProdutoVM>>(produtoCategoria);
+                listaProdutoCategoria = _mapper.Map<List<ProdutoVM>>(produtoCategoria);
                 return View(listaProdutoCategoria);
             }
+        }
+
+        public IActionResult Lista()
+        {
+
+            IEnumerable<Produto> produtos = _produtoService.ListaProduto();
+            List<ProdutoVM> lista = new List<ProdutoVM>();
+            lista = _mapper.Map<List<ProdutoVM>>(produtos);
+            return View(lista);
         }
 
         public IActionResult Detalhes(int id)
