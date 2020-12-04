@@ -11,6 +11,5 @@ namespace SystemBeauty.ViewModels
         public string CarrinhoCompraID { get; set; }
         public List<CarrinhoCompraItem> CarrinhoCompraItens { get; set; }
         public decimal Total { get; set; }
-        //public CarrinhoCompra CarrinhoCompra { get; set; }
     }
 }

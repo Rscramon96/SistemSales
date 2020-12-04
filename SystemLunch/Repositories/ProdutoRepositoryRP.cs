@@ -15,12 +15,12 @@ namespace SystemBeauty.Repositories
             _context = contexto;
         }
 
-        IEnumerable<Produto> IProdutoRepository.ListProdutos()
+        IEnumerable<Produto> IProdutoRepository.ListaProdutos()
         {
             return _context.Produtos.OrderBy(p => p.ID).Where(p => !p.Excluir).ToList();
         }
 
-        IEnumerable<Produto> IProdutoRepository.ListMaisVendidos()
+        IEnumerable<Produto> IProdutoRepository.ListaMaisVendidos()
         {
             return _context.Produtos.OrderByDescending(p => p.QtdVendido).Where(p => !p.Excluir).ToList();
         }

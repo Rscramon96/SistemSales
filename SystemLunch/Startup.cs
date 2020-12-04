@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SystemBeauty.AutoMapper;
 using SystemBeauty.Data;
 using SystemBeauty.Models;
 using SystemBeauty.Repositories;
@@ -39,6 +41,8 @@ namespace SystemBeauty
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
+            services.AddAutoMapper(typeof(Configuration));
+             
             services.AddScoped(CP => CarrinhoCompra.GetCarrinho(CP));
             services.AddDistributedMemoryCache();
             services.AddSession();

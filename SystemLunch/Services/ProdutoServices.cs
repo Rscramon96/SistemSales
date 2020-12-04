@@ -46,24 +46,24 @@ namespace SystemBeauty.Services
         {
             return _produtoRepository.ListaMaisVendidos();
         }
-        public IEnumerable<ProdutoVM> ListaProduto()
+        public IEnumerable<Produto> ListaProduto()
         {
-            var produtos = _produtoRepository.ListaProdutos();
+            return _produtoRepository.ListaProdutos();
 
-            List<ProdutoVM> lista = new List<ProdutoVM>();
-            foreach (var item in produtos)
-            {
-                ProdutoVM produtoVM = new ProdutoVM();
-                produtoVM.ID = item.ID;
-                produtoVM.Nome = item.Nome;
-                produtoVM.DescricaoCurta = item.DescricaoCurta;
-                produtoVM.VolumeEmbalagem = item.VolumeEmbalagem;
-                produtoVM.Preco = item.Preco;
-                produtoVM.ImageURL = item.ImageURL;
-                produtoVM.QtdEstoque = item.QtdEstoque;
-                lista.Add(produtoVM);
-            }
-            return lista;
+            //List<ProdutoVM> lista = new List<ProdutoVM>();
+            //foreach (var item in produtos)
+            //{
+            //    ProdutoVM produtoVM = new ProdutoVM();
+            //    produtoVM.ID = item.ID;
+            //    produtoVM.Nome = item.Nome;
+            //    produtoVM.DescricaoCurta = item.DescricaoCurta;
+            //    produtoVM.VolumeEmbalagem = item.VolumeEmbalagem;
+            //    produtoVM.Preco = item.Preco;
+            //    produtoVM.ImageURL = item.ImageURL;
+            //    produtoVM.QtdEstoque = item.QtdEstoque;
+            //    lista.Add(produtoVM);
+            //}
+            //return lista;
         }
 
         public Produto ProdutoVM_To_Produto(ProdutoVM produtoVM)

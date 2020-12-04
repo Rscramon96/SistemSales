@@ -36,7 +36,7 @@ namespace SystemBeauty.Models
                 CarrinhoCompraID = carrinhoId
             };
         }
-
+        #region
         //public void AdicionarAoCarrinho(Produto produto, int qtd)
         //{
         //    var carrinhoCompraItem = _carrinhoCompraItem.FindItem(produto,CarrinhoCompraID);
@@ -93,5 +93,6 @@ namespace SystemBeauty.Models
         //    Total = _carrinhoCompraItem.GetTotal(CarrinhoCompraID);
         //    return Total;
         //}
+        #endregion
     }
 }

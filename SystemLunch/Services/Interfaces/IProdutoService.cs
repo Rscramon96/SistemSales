@@ -7,7 +7,7 @@ namespace SystemBeauty.Services.Interfaces
     public interface IProdutoService
     {
         IEnumerable<Categoria> ListaCategorias();
-        IEnumerable<ProdutoVM> ListaProduto();
+        IEnumerable<Produto> ListaProduto();
         IEnumerable<Produto> ProdutoPorCategoria(int ID);
         IEnumerable<Produto> ListaMaisVendidos();
         Produto AddProduto(Produto produto);

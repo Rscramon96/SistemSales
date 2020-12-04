@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,26 +12,19 @@ namespace SystemBeauty.Controllers
     public class CategoriaController : Controller
     {
         private readonly ICategoriaService _categoriaService;
+        private readonly IMapper _mapper;
 
-        public CategoriaController(ICategoriaService categoriaService)
+        public CategoriaController(ICategoriaService categoriaService, IMapper mapper)
         {
             _categoriaService = categoriaService;
+            _mapper = mapper;
         }
 
         public IActionResult Lista()
         {
             var categoria = _categoriaService.ListaCategorias();
             List<CategoriaVM> lista = new List<CategoriaVM>();
-
-            foreach (var item in categoria)
-            {
-                CategoriaVM categoriaVM = new CategoriaVM();
-                categoriaVM.ID = item.ID;
-                categoriaVM.Nome = item.Nome;
-                categoriaVM.Descricao = item.Descricao;
-                categoriaVM.DataCadastro = item.DataCadastro;
-                lista.Add(categoriaVM);
-            }
+            lista = _mapper.Map<List<CategoriaVM>>(categoria);
             return View(lista);
         }
        
@@ -45,13 +39,8 @@ namespace SystemBeauty.Controllers
         {
             if (ModelState.IsValid)
             {
-                var categoria = new Categoria();
-
-                categoria.ID = categoriaVM.ID;
-                categoria.Nome = categoriaVM.Nome;
-                categoria.Descricao = categoriaVM.Descricao;
+                var categoria = _mapper.Map<Categoria>(categoriaVM);
                 categoria.DataCadastro = DateTime.Now;
-
                 _categoriaService.AddCategoria(categoria);
                 return RedirectToAction(nameof(Lista));
             }
@@ -69,12 +58,7 @@ namespace SystemBeauty.Controllers
 
             try
             {
-                var categoriaVM = new CategoriaVM();
-
-                categoriaVM.ID = categoria.ID;
-                categoriaVM.Nome = categoria.Nome;
-                categoriaVM.Descricao = categoria.Descricao;
-
+                var categoriaVM = _mapper.Map<CategoriaVM>(categoria);
                 return View(categoriaVM);
             }
             catch (Exception)
@@ -93,13 +77,6 @@ namespace SystemBeauty.Controllers
 
                 try
                 {
-                    categoria.ID = categoriaVM.ID;
-                    categoria.Nome = categoriaVM.Nome;
-                    categoria.Descricao = categoriaVM.Descricao;
-                    categoria.DataCadastro = categoria.DataCadastro;
-                    categoria.DataExclusao = categoria.DataExclusao;
-                    categoria.Excluir = categoriaVM.Excluir;
-
                     _categoriaService.UpdateCategoria(categoria);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -129,11 +106,7 @@ namespace SystemBeauty.Controllers
 
             try 
             {
-                var categoriaVM = new CategoriaVM();
-                categoriaVM.ID = categoria.ID;
-                categoriaVM.Nome = categoria.Nome;
-                categoriaVM.Descricao = categoria.Descricao;
-
+                var categoriaVM = _mapper.Map<CategoriaVM>(categoria);
                 return View(categoriaVM);
             }
 
@@ -151,14 +124,8 @@ namespace SystemBeauty.Controllers
 
             if (categoria.ID == id)
             {
-                var categoriaVM = new CategoriaVM();
-
-                categoria.Nome = categoriaVM.Nome;
-                categoria.Descricao = categoriaVM.Descricao;
-                categoria.DataCadastro = categoriaVM.DataCadastro;
                 categoria.DataExclusao = DateTime.Now;
                 categoria.Excluir = true;
-
                 _categoriaService.UpdateCategoria(categoria);
             }
             else

@@ -7,41 +7,51 @@ using SystemBeauty.Models;
 using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.ViewModels;
 using SystemBeauty.Services.Interfaces;
+using AutoMapper;
 
 namespace SystemBeauty.Controllers
 {
     public class ProdutoController : Controller
     {
         private readonly IProdutoService _produtoService;
+        private readonly IMapper _mapper;
 
-        public ProdutoController(IProdutoService produtoService)
+        public ProdutoController(IProdutoService produtoService, IMapper mapper)
         {
             _produtoService = produtoService;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
-            var produtoVM = _produtoService.ListaProduto();
-            return View(produtoVM);
+            IEnumerable<Produto> produtos = _produtoService.ListaProduto();
+            List<ProdutoVM> lista = new List<ProdutoVM>();
+            lista = _mapper.Map<List<ProdutoVM>>(produtos);            
+            return View(lista);
         }
 
         public IActionResult Lista(Categoria categoria)
         {
-            var produtoVM = _produtoService.ListaProduto();
+            IEnumerable<Produto> produtos = _produtoService.ListaProduto();
+            List<ProdutoVM> lista = new List<ProdutoVM>();
+            lista = _mapper.Map<List<ProdutoVM>>(produtos);
 
             if (categoria.ID == null)
             {
-                return View(produtoVM);
+                return View(lista);
             }
             else
             {
-                var produtoCategoria = _produtoService.ProdutoPorCategoria(categoria.ID);
-                return View(produtoCategoria);
+                IEnumerable<Produto> produtoCategoria = _produtoService.ProdutoPorCategoria(categoria.ID);
+                List<ProdutoVM> listaProdutoCategoria = new List<ProdutoVM>();
+                lista = _mapper.Map<List<ProdutoVM>>(produtoCategoria);
+                return View(listaProdutoCategoria);
             }
         }
 
         public IActionResult Detalhes(int id)
         {
             var produto = _produtoService.GetProdutoById(id);
+            var produtoVM = _mapper.Map<ProdutoVM>(produto);
 
             if (produto == null)
             {
@@ -49,8 +59,7 @@ namespace SystemBeauty.Controllers
             }
 
             try
-            {
-                var produtoVM = _produtoService.Produto_To_ProdutoVM(produto);
+            {                
                 return View(produtoVM);
             }
             catch (Exception)
@@ -71,7 +80,7 @@ namespace SystemBeauty.Controllers
         {
             if (ModelState.IsValid)
             {
-                var produto = _produtoService.ProdutoVM_To_Produto(produtoVM);
+                var produto = _mapper.Map<Produto>(produtoVM);
 
                 _produtoService.AddProduto(produto);
                 return RedirectToAction(nameof(Lista));
@@ -83,6 +92,7 @@ namespace SystemBeauty.Controllers
         public IActionResult Editar(int id)
         {
             var produto = _produtoService.GetProdutoById(id);
+            var produtoVM = _mapper.Map<ProdutoVM>(produto);
 
             if (produto == null)
             {
@@ -91,9 +101,7 @@ namespace SystemBeauty.Controllers
 
             try
             {
-                var produtoVM = _produtoService.Produto_To_ProdutoVM(produto);
                 ViewData["CategoriaID"] = new SelectList(_produtoService.ListaCategorias(), "ID", "Nome", produtoVM.CategoriaID = produto.CategoriaID);
-
                 return View(produtoVM);
             }
             catch (Exception)
@@ -109,10 +117,8 @@ namespace SystemBeauty.Controllers
             if (ModelState.IsValid)
             {
                 var produto = _produtoService.GetProdutoById(produtoVM.ID);
-
                 try
                 {
-                    produto = _produtoService.ProdutoVM_To_Produto(produtoVM);
                     _produtoService.UpdateProduto(produto);
                 }
                 catch (DbUpdateConcurrencyException)
@@ -143,7 +149,7 @@ namespace SystemBeauty.Controllers
 
             try
             {
-                var produtoVM = _produtoService.Produto_To_ProdutoVM(produto);
+                var produtoVM = _mapper.Map<ProdutoVM>(produto);
                 return View(produtoVM);
             }
             catch (Exception)

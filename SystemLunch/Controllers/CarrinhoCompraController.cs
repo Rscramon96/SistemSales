@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using SystemBeauty.Models;
-using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.Services.Interfaces;
 using SystemBeauty.ViewModels;
 
@@ -10,21 +10,18 @@ namespace SystemBeauty.Controllers
     {
         private readonly IProdutoService _produtoService;
         private readonly ICarrinhoCompraService _carrinhoCompra;
+        private readonly IMapper _mapper;
 
-        public CarrinhoCompraController(IProdutoService produtoService, ICarrinhoCompraService carrinhoCompra)
+        public CarrinhoCompraController(IProdutoService produtoService, ICarrinhoCompraService carrinhoCompra, IMapper mapper)
         {
             _produtoService = produtoService;
             _carrinhoCompra = carrinhoCompra;
+            _mapper = mapper;
         }
         public IActionResult Index(string ID)
         {
             var ListaProdutos = _carrinhoCompra.GetCarrinhoCompraItens(ID);
-
-            var CarrinhoCompra = new CarrinhoCompraVM
-            {
-                CarrinhoCompraItens = ListaProdutos,
-                Total = _carrinhoCompra.GetTotal(ID)
-            };
+            var CarrinhoCompra = _mapper.Map<CarrinhoCompraVM>(ListaProdutos); 
             return View (CarrinhoCompra);
         }
         public RedirectToActionResult AddItemCarrinho (CarrinhoCompraItem item, string CarrinhoCompraID)
