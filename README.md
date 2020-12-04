@@ -10,11 +10,10 @@ O projeto tem o objetivo ser um sistemas para auxiliar nas vendas online e futur
 - Asp Net Core 3.1
 - Entity Framework 3.1.9
 - Asp Net Core Identity 2.2 
-- Injection Dependecy
-      - Repository
-      - (Futuramente) Services
+- Injection Dependecy (Service, Repository)
 - Razor
 - Bootstrap
+- AutoMapper
 
 #### 🚧 Sistemas de Vendas Online (65%) 🚧
 
