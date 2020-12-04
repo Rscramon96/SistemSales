@@ -13,7 +13,5 @@ namespace SystemBeauty.Services.Interfaces
         Produto AddProduto(Produto produto);
         Produto UpdateProduto(Produto produto);    
         Produto GetProdutoById(int ID);
-        ProdutoVM Produto_To_ProdutoVM(Produto produto);
-        Produto ProdutoVM_To_Produto(ProdutoVM produto);
     }
 }
