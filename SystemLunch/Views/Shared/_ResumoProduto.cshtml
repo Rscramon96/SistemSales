@@ -7,7 +7,8 @@
         </a>
     </div>
     <div class="figure-caption">
-        <h5>@Model.Nome</h5>
-        <h5 class="pull-righ">Por: @Model.Preco.ToString("c")</h5>
+        <h6>@Model.Nome</h6>
+        <h6 class="pull-righ">Por: @Model.Preco.ToString("c")</h6>
+        <a asp-action="AddItemCarrinho" asp-route-ID="@Model.ID" asp-controller="CarrinhoCompra" class="btn btn-primary">Adiocionar ao Carrinho</a>
     </div>
 </div>

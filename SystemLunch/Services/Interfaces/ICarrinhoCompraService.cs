@@ -5,8 +5,9 @@ namespace SystemBeauty.Services.Interfaces
 {
     public interface ICarrinhoCompraService
     {
-        CarrinhoCompraItem Adicionar(Produto produto, int qtd, string CarrinhoCompraID);
-        int Remover(Produto produto, int qtd, string CarrinhoCompraID);
+        CarrinhoCompra GetCarrinho(CarrinhoCompra CarrinhoCompra);
+        CarrinhoCompraItem Adicionar(Produto produto, string CarrinhoCompraID);
+        int Remover(Produto produto, string CarrinhoCompraID);
         string Limpar(string CarrinhoCompraID);
         decimal GetTotal(string CarrinhoCompraID);
         List<CarrinhoCompraItem> GetCarrinhoCompraItens(string ID);

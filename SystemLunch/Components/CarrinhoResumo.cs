@@ -24,7 +24,6 @@ namespace SystemBeauty.Components
         {
             var IDCarrinho = _carrinho.CarrinhoCompraID;
             var produtos = _carrinhoCompra.GetCarrinhoCompraItens(IDCarrinho);
-            //var produtos = new List<CarrinhoCompraItem>() { new CarrinhoCompraItem(), new CarrinhoCompraItem() };
             var CarrinhoCompraVM = new CarrinhoCompraVM()
             {
                 CarrinhoCompraID = IDCarrinho,

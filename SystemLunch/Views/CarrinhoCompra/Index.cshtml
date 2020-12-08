@@ -10,7 +10,7 @@
         <thead>
             <tr>
                 <th>Quantidade</th>
-                <th>Lanche</th>
+                <th>Produto</th>
                 <th class="text-right">Preço</th>
                 <th class="text-right">Subtotal</th>
                 <th></th>
@@ -27,7 +27,7 @@
                         @((item.Quantidade * item.Produto.Preco).ToString("c"))
                     </td>
                     <td class="text-center">
-                        <a asp-controller="CarrinhoCompra" asp-action="RemoverItemDoCarrinhoCompra" asp-route-lancheId="@item.Produto.ID"><img src="~/images/delete.png" /></a>
+                        <a asp-controller="CarrinhoCompra" asp-action="RemoverItemCarrinho" asp-route-ID="@item.Produto.ID"><img src="~/images/delete.png" /></a>
                     </td>
                 </tr>
             }
@@ -50,16 +50,6 @@
                     Mais Lanches  <span class="caret"></span>
                 </a>
                 @await Component.InvokeAsync("CategoriaMenu")
-
-                @*//////////////////////////////////////////////////////////////////////////////
-                    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                          Adicionar mais lanches<span class="caret"></span>
-                      </a>
-                        <ul class="dropdown-menu" role="menuitem">
-                            <li><a asp-controller="Lanche" asp-action="List" asp-route-categoria="Normal"><b>Normal</b></a></li>
-                            <li><a asp-controller="Lanche" asp-action="List" asp-route-categoria="Natural"><b>Natural</b></a></li>
-                        </ul>
-                    ///////////////////////////////////////////////////////////////////////////////*@
             </a>
         </div>
     </div>

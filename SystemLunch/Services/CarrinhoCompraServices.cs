@@ -13,7 +13,17 @@ namespace SystemBeauty.Services
             _carrinhoCompraItem = carrinhoCompraItem;
         }
 
-        public CarrinhoCompraItem Adicionar(Produto produto, int qtd, string CarrinhoCompraID)
+        public CarrinhoCompra GetCarrinho(CarrinhoCompra CarrinhoCompra)
+        {
+            CarrinhoCompra cc = CarrinhoCompra;
+
+            var produtos = GetCarrinhoCompraItens(cc.CarrinhoCompraID);
+            cc.CarrinhoCompraItens = produtos;
+            cc.Total = GetTotal(cc.CarrinhoCompraID);
+            return (cc);
+        }
+
+        public CarrinhoCompraItem Adicionar(Produto produto, string CarrinhoCompraID)
         {
             var carrinhoCompraItem = _carrinhoCompraItem.FindItem(produto, CarrinhoCompraID);
 
@@ -23,42 +33,41 @@ namespace SystemBeauty.Services
                 {
                     CarrinhoItemID = CarrinhoCompraID,
                     Produto = produto,
-                    Quantidade = qtd
+                    Quantidade = 1
                 };
                 _carrinhoCompraItem.AddCarrinhoCompraItem(carrinhoCompraItem);
             }
             else
             {
                 carrinhoCompraItem.Quantidade++;
+                _carrinhoCompraItem.UpdateCarrinhoItem(carrinhoCompraItem);
             }
             return carrinhoCompraItem;
         }
 
-        public int Remover(Produto produto, int qtd, string CarrinhoCompraID)
+        public int Remover(Produto produto, string CarrinhoCompraID)
         {
             var carrinhoCompraItem = _carrinhoCompraItem.FindItem(produto, CarrinhoCompraID);
-
-            var quantidadeLocal = 0;
 
             if (carrinhoCompraItem != null)
             {
                 if (carrinhoCompraItem.Quantidade > 1)
                 {
-                    carrinhoCompraItem.Quantidade = carrinhoCompraItem.Quantidade - qtd;
-                    quantidadeLocal = carrinhoCompraItem.Quantidade;
+                    carrinhoCompraItem.Quantidade--;
+                    _carrinhoCompraItem.UpdateCarrinhoItem(carrinhoCompraItem);
                 }
                 else
                 {
                     _carrinhoCompraItem.RemoveItem(carrinhoCompraItem);
                 }
             }
-            return quantidadeLocal;
+            return carrinhoCompraItem.Quantidade;
         }
 
         public List<CarrinhoCompraItem> GetCarrinhoCompraItens(string CarrinhoCompraID)
         {
             List<CarrinhoCompraItem> CarrinhoCompraItens = new List<CarrinhoCompraItem>();
-            return CarrinhoCompraItens ?? (CarrinhoCompraItens = _carrinhoCompraItem.ListItens(CarrinhoCompraID));
+            return CarrinhoCompraItens = _carrinhoCompraItem.ListItens(CarrinhoCompraID);
         }
         public string Limpar(string CarrinhoCompraID)
         {

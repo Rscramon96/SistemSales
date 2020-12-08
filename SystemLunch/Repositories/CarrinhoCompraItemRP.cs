@@ -19,7 +19,6 @@ namespace SystemBeauty.Repositories
         public CarrinhoCompraItem FindItem (Produto produto, string ID)
         {
             var item = _context.CarrinhoCompraItens.SingleOrDefault(p => p.Produto.ID == produto.ID && p.CarrinhoItemID == ID);
-            _context.SaveChanges();
             return item;
         }
 
@@ -27,7 +26,13 @@ namespace SystemBeauty.Repositories
         {
             _context.Add(carrinhoCompraItem);
             _context.SaveChanges();
-            return null;
+            return carrinhoCompraItem;
+        }
+        public CarrinhoCompraItem UpdateCarrinhoItem(CarrinhoCompraItem carrinhoCompraItem)
+        {
+            _context.Update(carrinhoCompraItem);
+            _context.SaveChanges();
+            return carrinhoCompraItem;
         }
 
         public CarrinhoCompraItem RemoveItem(CarrinhoCompraItem carrinhoCompraItem)
