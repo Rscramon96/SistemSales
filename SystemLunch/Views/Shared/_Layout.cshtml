@@ -33,6 +33,11 @@
                         </li>
                         @await Component.InvokeAsync("CarrinhoResumo")
                     </ul>
+                    <form class="navbar-form navbar-right" asp-controller="Produto" asp-action="Pesquisar" method="get">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Procurar" name="searchString" value="@ViewData["buscaString"]">
+                        </div>
+                    </form>
                 </div>
             </div>
         </nav>

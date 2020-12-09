@@ -11,10 +11,10 @@ namespace SystemBeauty.Services
 {
     public class ProdutoServices : IProdutoService
     {
-        private readonly IProdutoRepository _produtoRepository;
-        private readonly ICategoriaRepository _categoriaRepository;
+        private readonly IProdutoRP _produtoRepository;
+        private readonly ICategoriaRP _categoriaRepository;
 
-        public ProdutoServices(IProdutoRepository produtoRepository, ICategoriaRepository categoriaRepository)
+        public ProdutoServices(IProdutoRP produtoRepository, ICategoriaRP categoriaRepository)
         {
             _produtoRepository = produtoRepository;
             _categoriaRepository = categoriaRepository;
@@ -49,6 +49,11 @@ namespace SystemBeauty.Services
         public IEnumerable<Produto> ListaProduto()
         {
             return _produtoRepository.ListaProdutos();
+        }
+
+        public IEnumerable<Produto> ListaBusca(string search)
+        {
+            return _produtoRepository.Busca(search);
         }
     }
 }

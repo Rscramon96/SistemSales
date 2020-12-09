@@ -6,21 +6,21 @@ using SystemBeauty.Repositories.Interfaces;
 
 namespace SystemBeauty.Repositories
 {
-    public class ProdutoRepositoryRP : IProdutoRepository
+    public class ProdutoRP : IProdutoRP
     {
 
         private readonly SBContext _context;
-        public ProdutoRepositoryRP(SBContext contexto)
+        public ProdutoRP(SBContext contexto)
         {
             _context = contexto;
         }
 
-        IEnumerable<Produto> IProdutoRepository.ListaProdutos()
+        IEnumerable<Produto> IProdutoRP.ListaProdutos()
         {
             return _context.Produtos.OrderBy(p => p.ID).Where(p => !p.Excluir).ToList();
         }
 
-        IEnumerable<Produto> IProdutoRepository.ListaMaisVendidos()
+        IEnumerable<Produto> IProdutoRP.ListaMaisVendidos()
         {
             return _context.Produtos.OrderByDescending(p => p.QtdVendido).Where(p => !p.Excluir).ToList();
         }
@@ -30,6 +30,10 @@ namespace SystemBeauty.Repositories
             return _context.Produtos.OrderBy(p => p.ID).Where(p => p.CategoriaID == CategoriaID).ToList();
         }
 
+        public IEnumerable<Produto> Busca(string busca)
+        {
+            return _context.Produtos.Where(p => p.Nome.ToLower().Contains(busca));
+        }
         public Produto AddProduto(Produto produto)
         {
             _context.Add(produto);

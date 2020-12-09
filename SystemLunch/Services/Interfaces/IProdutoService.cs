@@ -10,6 +10,7 @@ namespace SystemBeauty.Services.Interfaces
         IEnumerable<Produto> ListaProduto();
         IEnumerable<Produto> ProdutoPorCategoria(int ID);
         IEnumerable<Produto> ListaMaisVendidos();
+        IEnumerable<Produto> ListaBusca(string search);
         Produto AddProduto(Produto produto);
         Produto UpdateProduto(Produto produto);    
         Produto GetProdutoById(int ID);

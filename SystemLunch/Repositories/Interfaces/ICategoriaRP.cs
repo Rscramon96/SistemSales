@@ -3,7 +3,7 @@ using SystemBeauty.Models;
 
 namespace SystemBeauty.Repositories.Interfaces
 {
-    public interface ICategoriaRepository
+    public interface ICategoriaRP
     {
         IEnumerable<Categoria> ListaCategorias();
         Categoria GetCategoriaByID(int ID);

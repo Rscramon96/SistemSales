@@ -6,15 +6,15 @@ using SystemBeauty.Repositories.Interfaces;
 
 namespace SystemBeauty.Repositories
 {
-    public class CategoriaRepositoryRP : ICategoriaRepository
+    public class CategoriaRP : ICategoriaRP
     {
         private readonly SBContext _context;
-        public CategoriaRepositoryRP(SBContext contexto)
+        public CategoriaRP(SBContext contexto)
         {
             _context = contexto;
         }
 
-        IEnumerable<Categoria> ICategoriaRepository.ListaCategorias()
+        IEnumerable<Categoria> ICategoriaRP.ListaCategorias()
         {
             return _context.Categorias.OrderBy(c => c.Nome).Where(c => !c.Excluir).ToList();
         }

@@ -31,13 +31,15 @@ namespace SystemBeauty
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<SBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddTransient<ICategoriaRepository, CategoriaRepositoryRP>();
-            services.AddTransient<IProdutoRepository, ProdutoRepositoryRP>();
-            services.AddTransient<ICarrinhoCompraItemRepository, CarrinhoCompraItemRP>();
+            services.AddTransient<ICategoriaRP, CategoriaRP>();
+            services.AddTransient<IProdutoRP, ProdutoRP>();
+            services.AddTransient<ICarrinhoCompraItemRP, CarrinhoCompraItemRP>();
+            services.AddTransient<IPedidoRP, PedidoRP>();
 
             services.AddTransient<ICarrinhoCompraService, CarrinhoCompraServices>();
             services.AddTransient<IProdutoService, ProdutoServices>();
             services.AddTransient<ICategoriaService, CategoriaServices>();
+            services.AddTransient<IPedidoService, PedidoServices>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

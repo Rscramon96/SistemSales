@@ -175,5 +175,21 @@ namespace SystemBeauty.Controllers
             }
             return RedirectToAction(nameof(Lista));
         }
+
+        public IActionResult Pesquisar (string search)
+        {
+            //string _search = search;
+            IEnumerable<Produto> produtos;
+            string _categoria = string.Empty;
+
+            if (string.IsNullOrEmpty(search))
+            {
+                produtos = _produtoService.ListaProduto();
+            }
+            else
+            {
+                produtos = _produtoService.ListaBusca(search);
+            }
+        }
     }
 }

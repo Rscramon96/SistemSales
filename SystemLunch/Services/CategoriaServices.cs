@@ -10,9 +10,9 @@ namespace SystemBeauty.Services
 {
     public class CategoriaServices : ICategoriaService
     {
-        private readonly ICategoriaRepository _categoriaRepository;
+        private readonly ICategoriaRP _categoriaRepository;
 
-        public CategoriaServices(ICategoriaRepository categoriaRepository)
+        public CategoriaServices(ICategoriaRP categoriaRepository)
         {
             _categoriaRepository = categoriaRepository;
         }
