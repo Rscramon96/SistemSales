@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SystemBeauty.Data;
 
 namespace SystemBeauty.Migrations
 {
     [DbContext(typeof(SBContext))]
-    partial class SBContextModelSnapshot : ModelSnapshot
+    [Migration("20201210145615__Atualiza~cao_Pedido_Endereco")]
+    partial class _Atualizacao_Pedido_Endereco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,9 +105,6 @@ namespace SystemBeauty.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .UseIdentityColumn();
-
-                    b.Property<string>("CarrinhoCompraID")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Cep")
                         .HasColumnType("nvarchar(max)");

@@ -44,13 +44,7 @@
 
     <div class="text-right">
         <div class="btn-group ">
-            <a class="btn btn-success" asp-controller="Pedido" asp-action="Checkout">Encerrar Pedido</a>
-            <a class="btn-group">
-                <a class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    Mais Lanches  <span class="caret"></span>
-                </a>
-                @await Component.InvokeAsync("CategoriaMenu")
-            </a>
+            <a class="btn btn-success" asp-controller="Pedido" asp-action="Checkout" asp-route-CarrinhoCompraID="@Model.CarrinhoCompraID">Encerrar Pedido</a>
         </div>
     </div>
 </div>

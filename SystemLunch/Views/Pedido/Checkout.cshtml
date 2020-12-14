@@ -1,0 +1,115 @@
+﻿@model PedidoVM
+
+<h3>Preencha o formulário para completar seu pedido.</h3>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-5">
+            <form asp-action="Checkout" method="post" class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label asp-for="Nome" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Nome" class="form-control" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Endereco" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Endereco" class="form-control" />
+                        <span asp-validation-for="Endereco" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Complemento" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Complemento" class="form-control" />
+                        <span asp-validation-for="Complemento" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cep" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Cep" class="form-control" />
+                        <span asp-validation-for="Cep" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Cidade" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Cidade" class="form-control" />
+                        <span asp-validation-for="Cidade" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Estado" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Estado" class="form-control" />
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telefone" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Telefone" class="form-control" />
+                        <span asp-validation-for="Telefone" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-4 control-label"></label>
+                    <div class="col">
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <input type="hidden" name="CarrinhoCompraID" value="@Model.CarrinhoCompraID" />
+                <div class="form-group">
+                    <div class="btn-group col-5">
+                        <input class="btn btn-success" type="submit" value="Concluir" />
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-7">
+            <img src="~/images/Full-Cart-icon.png" />
+            <div>
+                <h4> Seu carrinho de compras : </h4>
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Quantidade</th>
+                        <th>Produto</th>
+                        <th class="text-right">Preço</th>
+                        <th class="text-right">Subtotal</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CarrinhoCompra.CarrinhoCompraItens)
+                    {
+                        <tr>
+                            <td class="text-center">@item.Quantidade</td>
+                            <td class="text-left">@item.Produto.Nome</td>
+                            <td class="text-right">@item.Produto.Preco.ToString("c")</td>
+                            <td class="text-right">
+                                @((item.Quantidade * item.Produto.Preco).ToString("c"))
+                            </td>
+                            <td class="text-center">
+                                <a asp-controller="CarrinhoCompra" asp-action="RemoverItemCarrinho" asp-route-ID="@item.Produto.ID"><img src="~/images/delete.png" /></a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right">Total:</td>
+                        <td class="text-right">
+                            @Model.CarrinhoCompra.Total.ToString("c")
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>

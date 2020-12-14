@@ -12,42 +12,55 @@ namespace SystemBeauty.Controllers
         private readonly IProdutoService _produtoService;
         private readonly ICarrinhoCompraService _carrinhoCompra;
         private readonly IMapper _mapper;
-        private readonly CarrinhoCompra _carrinho;
 
-        public CarrinhoCompraController(IProdutoService produtoService, ICarrinhoCompraService carrinhoCompra, IMapper mapper, CarrinhoCompra carrinho)
+        public CarrinhoCompraController(IProdutoService produtoService, ICarrinhoCompraService carrinhoCompra, IMapper mapper)
         {
             _produtoService = produtoService;
             _carrinhoCompra = carrinhoCompra;
             _mapper = mapper;
-            _carrinho = carrinho;
         }
-        public IActionResult Index()
+        public IActionResult Index(string CarrinhoCompraID)
         {
-            var carrinho = _carrinhoCompra.GetCarrinho(_carrinho);
-            CarrinhoCompraVM cc = _mapper.Map<CarrinhoCompraVM>(carrinho);
-            return View (cc);
+            var carrinho = _carrinhoCompra.GetCarrinho(CarrinhoCompraID);
+            if (carrinho != null)
+            {
+                CarrinhoCompraVM carrinhoVM = _mapper.Map<CarrinhoCompraVM>(carrinho);
+                return View(carrinhoVM);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
-        public IActionResult AddItemCarrinho (int ID)
+        public IActionResult AddItemCarrinho(int ID)
         {
             var produtoselecionado = _produtoService.GetProdutoById(ID);
-            var CarrinhoCompraID = _carrinho.CarrinhoCompraID;
+            var CarrinhoCompraID = _carrinhoCompra.GetCarrinhoByID();
 
             if (produtoselecionado != null)
             {
                 _carrinhoCompra.Adicionar(produtoselecionado, CarrinhoCompraID);
+                return RedirectToAction("Index", new { CarrinhoCompraID = CarrinhoCompraID} );
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return NotFound();
+            }
         }
-        public IActionResult RemoverItemCarrinho (int ID)
+        public IActionResult RemoverItemCarrinho(int ID)
         {
             var produtoselecionado = _produtoService.GetProdutoById(ID);
-            var CarrinhoCompraID = _carrinho.CarrinhoCompraID;
+            var CarrinhoCompraID = _carrinhoCompra.GetCarrinhoByID();
 
             if (produtoselecionado != null)
             {
                 _carrinhoCompra.Remover(produtoselecionado, CarrinhoCompraID);
+                return RedirectToAction("Index", new { CarrinhoCompraID = CarrinhoCompraID });
             }
-            return RedirectToAction("Index");
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

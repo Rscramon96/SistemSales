@@ -31,7 +31,7 @@ namespace SystemBeauty.Repositories
                     PedidoID = pedido.ID,
                     Preco = item.Produto.Preco
                 };
-                _context.Add(itenspedido);
+                _context.ItensPedidos.Add(itenspedido);
             }
             _context.SaveChanges();
         }

@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:brown">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:cornflowerblue">
             <div class="container">
                 <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">SystemBeauty</a> <h4 class="text-white">|</h4>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -17,6 +17,10 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <form class="form-inline" asp-controller="Produto" asp-action="Pesquisar" method="get">
+                        <input type="search" class="form-control" placeholder="Procurar" name="search" value="@ViewData["search"]">
+                        <button class="btn" type="submit"><img src="~/images/icons8-pesquisar-24.png"/></button>
+                    </form>
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -33,11 +37,6 @@
                         </li>
                         @await Component.InvokeAsync("CarrinhoResumo")
                     </ul>
-                    <form class="navbar-form navbar-right" asp-controller="Produto" asp-action="Pesquisar" method="get">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Procurar" name="searchString" value="@ViewData["buscaString"]">
-                        </div>
-                    </form>
                 </div>
             </div>
         </nav>

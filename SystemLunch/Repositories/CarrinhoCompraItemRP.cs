@@ -39,26 +39,24 @@ namespace SystemBeauty.Repositories
         {
             _context.Remove(carrinhoCompraItem);
             _context.SaveChanges();
-            return null;
+            return carrinhoCompraItem;
         }
 
         public List<CarrinhoCompraItem> RemoveAllItens(List<CarrinhoCompraItem> carrinho)
         {
             _context.CarrinhoCompraItens.RemoveRange(carrinho);
             _context.SaveChanges();
-            return null;
+            return carrinho;
         }
 
-        List<CarrinhoCompraItem> ICarrinhoCompraItemRP.ListItens(string ID)
+        public List<CarrinhoCompraItem> ListItens(string CarrinhoID)
         {
-            var list = _context.CarrinhoCompraItens.Where(c => c.CarrinhoItemID == ID).Include(p => p.Produto).ToList();
-            return list;
+            return _context.CarrinhoCompraItens.Where(c => c.CarrinhoItemID == CarrinhoID).Include(p => p.Produto).ToList();
         }
 
         public decimal GetTotal(string ID)
         {
-            var total = _context.CarrinhoCompraItens.Where(c => c.CarrinhoItemID == ID).Select(c => c.Produto.Preco * c.Quantidade).Sum();
-            return total;
+            return _context.CarrinhoCompraItens.Where(c => c.CarrinhoItemID == ID).Select(c => c.Produto.Preco * c.Quantidade).Sum();
         }
     }
 }

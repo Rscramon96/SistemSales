@@ -44,8 +44,8 @@ namespace SystemBeauty
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddAutoMapper(typeof(Configuration));
-             
-            services.AddScoped(CP => CarrinhoCompra.GetCarrinho(CP));
+
+            services.AddScoped (CP => CarrinhoCompra.GetCarrinho(CP));
             services.AddDistributedMemoryCache();
             services.AddSession();
         }

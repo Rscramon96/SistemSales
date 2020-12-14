@@ -15,7 +15,7 @@ namespace SystemBeauty.AutoMapper
             CreateMap<ProdutoVM, Produto>().ReverseMap();
             CreateMap<CategoriaVM, Categoria>().ReverseMap();
             CreateMap<CarrinhoCompraVM, CarrinhoCompra>().ReverseMap();
-            CreateMap<CarrinhoCompraItemVM, CarrinhoCompraItem>().ReverseMap();
+            CreateMap<PedidoVM, Pedido>().ReverseMap();
         }
     }
 }

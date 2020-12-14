@@ -190,6 +190,10 @@ namespace SystemBeauty.Controllers
             {
                 produtos = _produtoService.ListaBusca(search);
             }
+            IEnumerable<ProdutoVM> produtosVM;
+            produtosVM = _mapper.Map<List<ProdutoVM>>(produtos);
+
+            return View("Index", new List<ProdutoVM>(produtosVM));
         }
     }
 }

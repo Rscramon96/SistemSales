@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SystemBeauty.Models;
 using SystemBeauty.Repositories.Interfaces;
 using SystemBeauty.Services.Interfaces;
@@ -8,19 +9,30 @@ namespace SystemBeauty.Services
     public class CarrinhoCompraServices : ICarrinhoCompraService
     {
         private readonly ICarrinhoCompraItemRP _carrinhoCompraItem;
-        public CarrinhoCompraServices(ICarrinhoCompraItemRP carrinhoCompraItem)
+        private readonly CarrinhoCompra _carrinho;
+
+        public CarrinhoCompraServices(ICarrinhoCompraItemRP carrinhoCompraItem, CarrinhoCompra carrinho)
         {
             _carrinhoCompraItem = carrinhoCompraItem;
+            _carrinho = carrinho;
         }
 
-        public CarrinhoCompra GetCarrinho(CarrinhoCompra CarrinhoCompra)
+        public string GetCarrinhoByID()
         {
-            CarrinhoCompra cc = CarrinhoCompra;
+            return _carrinho.CarrinhoCompraID;
+        }
 
-            var produtos = GetCarrinhoCompraItens(cc.CarrinhoCompraID);
-            cc.CarrinhoCompraItens = produtos;
-            cc.Total = GetTotal(cc.CarrinhoCompraID);
-            return (cc);
+        public CarrinhoCompra GetCarrinho(string CarrinhoCompraID)
+        {
+            CarrinhoCompra carrinho = _carrinho;
+            if (CarrinhoCompraID == _carrinho.CarrinhoCompraID)
+            {
+                List<CarrinhoCompraItem> produtos = GetCarrinhoCompraItens(CarrinhoCompraID);
+                carrinho.CarrinhoCompraID = CarrinhoCompraID;
+                carrinho.CarrinhoCompraItens = produtos;
+                carrinho.Total = GetTotal(CarrinhoCompraID);
+            }
+            return (carrinho);
         }
 
         public CarrinhoCompraItem Adicionar(Produto produto, string CarrinhoCompraID)
@@ -66,8 +78,8 @@ namespace SystemBeauty.Services
 
         public List<CarrinhoCompraItem> GetCarrinhoCompraItens(string CarrinhoCompraID)
         {
-            List<CarrinhoCompraItem> CarrinhoCompraItens = new List<CarrinhoCompraItem>();
-            return CarrinhoCompraItens = _carrinhoCompraItem.ListItens(CarrinhoCompraID);
+            //List<CarrinhoCompraItem> CarrinhoCompraItens = new List<CarrinhoCompraItem>();
+            return _carrinhoCompraItem.ListItens(CarrinhoCompraID);
         }
         public string Limpar(string CarrinhoCompraID)
         {
